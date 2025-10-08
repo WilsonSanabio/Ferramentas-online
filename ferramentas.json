@@ -1,0 +1,61 @@
+[
+  {
+	"tipo": "comunicacao",
+	"nome": "E-mail_fake",
+	"url": "https://emkei.cz/"
+  },
+
+  {
+	"tipo": "comunicacao",
+	"nome": "WhatsApp (Dono Do Zap)",
+	"url": "https://donodozap.com/"
+  },
+
+  {
+	"tipo": "geradores",
+	"nome": "Gerador de Documentos",
+	"url": "https://www.4devs.com.br/"
+  },
+  
+  {
+	"tipo": "geradores",
+	"nome": "Conversor online",
+	"url": "https://documento.online-convert.com/pt"
+  },
+  
+  {
+	"tipo": "geradores",
+	"nome": "Webhook",
+	"url": "https://webhook.site/"
+  },
+
+  {
+	"tipo": "seguranca",
+	"nome": "Encryption/Decryption",
+	"url": "https://emn178.github.io/online-tools/"
+  },
+  
+  {
+	"tipo": "seguranca",
+	"nome": "Encoder/Decoder",
+	"url": "https://fusionauth.io/dev-tools/"
+  },
+  
+  {
+	"tipo": "seguranca",
+	"nome": "Hash Analyzer",
+	"url": "https://www.tunnelsup.com/hash-analyzer/"
+  },
+  
+  {
+	"tipo": "educacao",
+	"nome": "Khan Academy",
+	"url": "https://www.khanacademy.org/"
+  },
+	
+  {
+	"tipo": "educacao",
+	"nome": "Coursera",
+	"url": "https://www.coursera.org/"
+  }
+]

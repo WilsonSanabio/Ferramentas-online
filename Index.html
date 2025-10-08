@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Ferramentas Online</title>
+
+  <!-- Ícone do projeto (favicon) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>">
+
+  <style>
+    body {
+      font-family: "Trebuchet MS", sans-serif;
+      background-color: #eef;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .category-buttons {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .category-buttons button {
+      margin: 5px;
+      padding: 10px 15px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .tools-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: auto;
+    }
+
+    .tools-table td {
+      padding: 10px;
+      border: 1px solid #99c;
+      background-color: #fff;
+      width: 33%;
+    }
+
+    #footer {
+      text-align: center;
+      margin-top: 40px;
+      font-size: 0.9em;
+    }
+
+    #shutdown-button {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    #shutdown-button button {
+      background-color: #c33;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-weight: bold;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    #shutdown-button button:hover {
+      background-color: #a00;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>Ferramentas Online</h1>
+
+  <div class="category-buttons" id="categoryButtons"></div>
+
+  <table class="tools-table" id="toolsTable"></table>
+
+  <div id="shutdown-button">
+    <button onclick="encerrarServidor()">Encerrar Servidor</button>
+  </div>
+
+  <div id="footer">
+    <p><i>Sana/Bios Informática & Consultoria [2025]</i></p>
+    <small>&copy; 2025 Wilson Sanabio.</small>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    let data = [];
+
+    // Função para retornar ícone por tipo
+    function getIcon(tipo) {
+      switch (tipo) {
+        case 'comunicacao': return '📡';
+        case 'geradores': return '⚙️';
+        case 'seguranca': return '🔐';
+        case 'educacao': return '📚';
+        default: return '🔧';
+      }
+    }
+
+    fetch('ferramentas.json')
+      .then(response => response.json())
+      .then(json => {
+        data = json;
+        const categorias = [...new Set(data.map(item => item.tipo))];
+        const buttonContainer = document.getElementById('categoryButtons');
+
+        const todasBtn = document.createElement('button');
+        todasBtn.textContent = 'Todas';
+        todasBtn.onclick = () => renderTable('all');
+        buttonContainer.appendChild(todasBtn);
+
+        categorias.forEach(cat => {
+          const btn = document.createElement('button');
+          btn.textContent = cat.charAt(0).toUpperCase() + cat.slice(1);
+          btn.onclick = () => renderTable(cat);
+          buttonContainer.appendChild(btn);
+        });
+
+        renderTable('all');
+      });
+
+    function renderTable(categoria) {
+      const table = document.getElementById('toolsTable');
+      table.innerHTML = '';
+
+      let items = categoria === 'all' ? data : data.filter(item => item.tipo === categoria);
+      items.sort((a, b) => a.nome.localeCompare(b.nome));
+
+      for (let i = 0; i < items.length; i += 3) {
+        const row = document.createElement('tr');
+        for (let j = 0; j < 3; j++) {
+          const cell = document.createElement('td');
+          const item = items[i + j];
+          if (item) {
+            const icon = getIcon(item.tipo);
+            cell.innerHTML = `<a href="${item.url}" target="_blank">${icon} ${item.nome}</a>`;
+          } else {
+            cell.innerHTML = '<!-- Espaço para nova ferramenta -->';
+          }
+          row.appendChild(cell);
+        }
+        table.appendChild(row);
+      }
+    }
+
+    function encerrarServidor() {
+      fetch('/encerrar', { method: 'POST' })
+        .then(() => alert("Servidor encerrado. Você pode fechar esta aba."))
+        .catch(() => alert("Erro ao tentar encerrar o servidor."));
+    }
+  </script>
+
+</body>
+</html>
+
